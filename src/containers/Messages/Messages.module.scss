@@ -1,0 +1,48 @@
+@import "../../variables.scss";
+
+.background {
+    background: url("../../assets/ghosts.jpg") repeat;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    flex-grow: 1;
+    z-index: -2;
+
+    h1 {
+        // border-bottom: rgb(91, 2, 194) 2px solid;
+        background: $primary-color;
+        color: $primary-text;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        font-weight: 700;
+        top: 0;
+        left: 15vw;
+        height: 50px;
+        text-align: center;
+        width: 70vw;
+    }
+
+    .messages {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-end;
+        // display: block;
+        margin: 0 auto;
+        height: 100%;
+        position: relative;
+        width: 70%;
+        
+        &::before {
+            position: absolute;
+            background-color: white;
+            content: "";
+            height: 100%;
+            width: 70%;
+            opacity: 0.95;
+            z-index: -1;
+        }
+    }
+}

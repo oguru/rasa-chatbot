@@ -1,0 +1,58 @@
+@import "../../variables.scss";
+
+.message {
+    background-color: $secondary-color;
+    border-radius: 4px;
+    color: $secondary-text;
+    margin: 10px;
+    padding: 5px 10px 8px;
+    text-align:start;
+    max-width: 60%;
+    width: fit-content;
+    transition: transform 0.5s;
+    position: absolute;
+    bottom: 0;
+    // animation: messageAnim 7s linear forwards;
+}
+
+.message.ghost {
+    transition: all 2s;
+    transform: scale(10.0);
+    filter: blur(100px);
+    opacity: 0;
+}
+
+@keyframes messageAnim {
+    0% {
+        filter: blur(0px);
+        opacity: 1;
+        // transform: scale(1);
+        // bottom: -50px;
+        // transform: translateY(50px);
+    }
+    4% {
+        // bottom: 0px;
+        // transform: translateY(0px);
+    }
+    80% {
+        filter: blur(0px);
+        opacity: 1;
+        transform: scale(1);
+        // transform: translateY(0px);
+    }
+    100% {
+        // transform: translateY(-1000px);
+        transform: scale(10.0);
+        filter: blur(100px);
+        opacity: 0;
+    }
+}
+
+@keyframes messageInit {
+    from {
+        transform: translateY(50px);
+    }
+    to {
+        transform: translateY(0px);
+    }
+}
