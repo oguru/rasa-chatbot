@@ -7,52 +7,79 @@
     margin: 10px;
     padding: 5px 10px 8px;
     text-align:start;
-    max-width: 60%;
+    // max-width: 80%;
     width: fit-content;
     transition: transform 0.5s;
     position: absolute;
     bottom: 0;
-    // animation: messageAnim 7s linear forwards;
+    z-index: 5;
 }
 
-.message.ghost {
+.message.disappear {
     transition: all 2s;
     transform: scale(10.0);
     filter: blur(100px);
     opacity: 0;
 }
 
-@keyframes messageAnim {
+img {
+    animation-delay: 0s, 5s;
+    animation-duration: 5s, 2s;
+    animation-fill-mode: forwards, forwards;
+    animation-name: ghostAppear, ghostCarry;
+    bottom: 0;
+    height: 120px;
+    object-fit: contain;
+    opacity: 1;
+    position: absolute;
+    right: 0;
+    transform: translateX(-50vw);
+    transition: all 2s;
+    width: 120px;
+    z-index: 11;
+}
+
+@keyframes ghostAppear {
     0% {
-        filter: blur(0px);
-        opacity: 1;
-        // transform: scale(1);
-        // bottom: -50px;
-        // transform: translateY(50px);
+        opacity: 0;
+        transform: translateY(150px);
     }
-    4% {
-        // bottom: 0px;
-        // transform: translateY(0px);
+    25% {
+        transform: translateY(70px);
+    }
+    50% {
+        transform: translateY(100px) rotate(20deg);
     }
     80% {
-        filter: blur(0px);
-        opacity: 1;
-        transform: scale(1);
-        // transform: translateY(0px);
+        opacity: 0.5;
+        transform: translateY(50px) rotate(0deg);
+    }
+    84% {
+        transform: translateY(50px) rotate(15deg);
+
+    }
+    90% {
+        transform: translateY(50px) rotate(-15deg);
+
+    }
+    98% {
+        transform: translateY(50px) rotate(15deg);
+
     }
     100% {
-        // transform: translateY(-1000px);
-        transform: scale(10.0);
-        filter: blur(100px);
-        opacity: 0;
+        opacity: 0.5;
+        transform: translateY(50px) rotate(15deg);
     }
 }
 
-@keyframes messageInit {
+@keyframes ghostCarry {
     from {
-        transform: translateY(50px);
+        opacity: 0.5;
+        transform: translateY(50px) rotate(15deg);
     }
     to {
-        transform: translateY(0px);
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(-100vh) rotate(-1000deg);
     }
 }
