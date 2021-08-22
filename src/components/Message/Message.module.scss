@@ -6,35 +6,28 @@
     color: $secondary-text;
     margin: 10px;
     padding: 5px 10px 8px;
-    text-align:start;
-    // max-width: 80%;
-    width: fit-content;
-    transition: transform 0.5s;
     position: absolute;
-    bottom: 0;
+    transition: transform 0.5s;
+    width: fit-content;
     z-index: 5;
 }
 
 .message.disappear {
-    transition: all 2s;
-    transform: scale(10.0);
     filter: blur(100px);
     opacity: 0;
+    transform: scale(10.0);
+    transition: all 2s;
 }
 
 img {
     animation-delay: 0s, 5s;
     animation-duration: 5s, 2s;
-    animation-fill-mode: forwards, forwards;
     animation-name: ghostAppear, ghostCarry;
     bottom: 0;
     height: 120px;
     object-fit: contain;
-    opacity: 1;
     position: absolute;
     right: 0;
-    transform: translateX(-50vw);
-    transition: all 2s;
     width: 120px;
     z-index: 11;
 }
@@ -51,7 +44,7 @@ img {
         transform: translateY(100px) rotate(20deg);
     }
     80% {
-        opacity: 0.5;
+        opacity: 0.3;
         transform: translateY(50px) rotate(0deg);
     }
     84% {
@@ -67,7 +60,7 @@ img {
 
     }
     100% {
-        opacity: 0.5;
+        opacity: 0.4;
         transform: translateY(50px) rotate(15deg);
     }
 }
@@ -78,8 +71,8 @@ img {
         transform: translateY(50px) rotate(15deg);
     }
     to {
-        opacity: 0;
         filter: blur(10px);
+        opacity: 0;
         transform: translateY(-100vh) rotate(-1000deg);
     }
 }

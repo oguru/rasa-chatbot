@@ -1,11 +1,11 @@
 @import "./variables.scss";
 
 .App {
+  align-items: center;
+  background: url("./assets/ghosts.jpg") repeat;
   display: flex;
   flex-direction: column;
-  align-items: center;
   height: 100vh;
-  background: url("./assets/ghosts-sm.jpg") repeat;
   width: 100vw;
   
   .messengerContainer {
@@ -17,14 +17,14 @@
     width: 100vw;
 
     h1 {
+      align-items: center;
       background: $primary-color;
       color: $primary-text;
       display: flex;
       font-size: 24px;
-      align-items: center;
-      justify-content: center;
       font-weight: 700;
       height: 50px;
+      justify-content: center;
       width: 100%;
       z-index: 10;
     }
@@ -47,5 +47,5 @@
     .messengerContainer {
       width: 70vw;
     }
-}
+  }
 }

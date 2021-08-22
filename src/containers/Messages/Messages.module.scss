@@ -1,20 +1,21 @@
 @import "../../variables.scss";
 
 .background {
-    display: flex;
-    justify-content: center;
     position: relative;
     flex-grow: 1;
     z-index: 1;
 
     .messages {
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.863) 0%,rgba(255, 255, 255, 0.932) 100%), url("../../assets/ghosts-2.jpg") repeat;
+        align-items: flex-end;
+        background: linear-gradient(to bottom, 
+            rgba(255, 255, 255, 0.863) 0%,
+            rgba(255, 255, 255, 0.932) 100%), 
+            url("../../assets/ghosts-2.jpg") repeat;
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
-        align-items: flex-end;
-        margin: 0 auto;
         height: 100%;
+        justify-content: flex-end;
+        margin: 0 auto;
         position: relative;
         width: 100%;
     }
