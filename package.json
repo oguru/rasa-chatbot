@@ -1,5 +1,5 @@
 {
-  "name": "redux-messenger",
+  "name": "ghost-messenger",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,7 +20,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
     "mkrc": "./node_modules/.bin/mkrc"
   },

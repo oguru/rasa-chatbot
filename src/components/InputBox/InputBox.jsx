@@ -22,7 +22,7 @@ const InputBox = () => {
 
    useEffect(() => {
       if (windowWidth < 450) {
-         setMaxChars(35);
+         setMaxChars(30);
       } else if (windowWidth < 768) {
          setMaxChars(50);
       } else if (windowWidth < 1024) {

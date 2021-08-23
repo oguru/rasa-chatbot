@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+# Protolyst Tech Test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
+To create a ReactJS web application: a simple "message queue" system utilising redux as the store for the messages.
 
-## Available Scripts
+## Requirements
 
-In the project directory, you can run:
+**The interface will be comprised of:**
+- A text box to enter string text
+- A button to submit a message
+- A notification space to display messages for 5 seconds
+ 
+**How it works:**
+- When the user clicks the button to submit the message (string contained in the text box) it will be added into the redux store.
+- A component should retrieve the message from the redux store, and it should be displayed on the screen within the notification space.
+- After a 5 second delay, the message should be removed from the store, which in turn removes it from the component displaying it and the screen.
 
-### `yarn start`
+**Considerations:**
+ 
+- You can use as many or few react components as you like BUT they must be functional components, and not class based components.
+- It should be possible to add multiple messages to the queue. e.g. At 0 seconds we enter a message press the button, then 1 second later we enter a new message press the button again. We should see **two** messages on screen. Then at 5 seconds the first one should disappear (5 seconds after it was added), and then at 6 seconds in, the second one should disappear (5 seconds after it was added).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Submission Info
+I greatly enjoyed this exercise and extended it to include a themed UI and animations.
 
-### `yarn test`
+Due to this, the timer was intentionally extended to 7 seconds for a better user experience.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Several tests have been written to demonstrate my testing capabilities.
 
-### `yarn build`
+## To Be Improved
+I could not get 1 of the tests to work but have left it commented out to show what I was trying to do.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The tests pass but throw warnings. Several attempts were made to implement Enzyme **act** as expressed by the warnings. I am unsure whether this is because Enzyme Adapter is not supported for React 17 yet, so I have used an unofficial temporary version created by a 3rd party.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Setup
+1 - Clone the repository.\
+2 - Install dependencies with ```yarn install``` or ```npm install```.\
+3 - Run ```yarn start``` or ```npm run start``` in the project directory from the command line .\
+4 - Open [http://localhost:3000](http://localhost:3000) to view it in the browser.\
+5 - Run ```yarn test``` or ```npm run test``` to run tests.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Hosted Link
+#### [Link](https://francisroadallotments.co.uk/) to live site.
