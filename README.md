@@ -28,11 +28,6 @@ Due to this, the timer was intentionally extended to 7 seconds for a better user
 
 Several tests have been written to demonstrate my testing capabilities.
 
-## To Be Improved
-I could not get 1 of the tests to work but have left it commented out to show what I was trying to do.
-
-The tests pass but throw warnings. Several attempts were made to implement Enzyme **act** as expressed by the warnings. I am unsure whether this is because Enzyme Adapter is not supported for React 17 yet, so I have used an unofficial temporary version created by a 3rd party.
-
 ## Setup
 1 - Clone the repository.\
 2 - Install dependencies with ```yarn install``` or ```npm install```.\
