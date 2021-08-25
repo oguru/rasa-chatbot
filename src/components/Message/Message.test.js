@@ -9,7 +9,6 @@ describe("Message component tests", () => {
    let totalNum = 1;
    let index = 0;
 
-   /*
    it("Should display the message from props", () => {
       wrapper = shallow(<Message
          msg={msg}
@@ -25,7 +24,7 @@ describe("Message component tests", () => {
    it("Should have the 'disappear' css class applied after 5 seconds", async () => {
       jest.useFakeTimers();
 
-       wrapper = mount(<Message
+      wrapper = mount(<Message
          msg={msg}
          totalNum={totalNum}
          index={index}
@@ -44,7 +43,7 @@ describe("Message component tests", () => {
       expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 5000);
 
       expect(message.hasClass("disappear")).toBe(true);
-   }); */
+   });
 
    it("Should start with translateY 50px inline style and change to 0px", () => {
       jest.useFakeTimers();
