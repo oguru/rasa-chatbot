@@ -1,29 +1,57 @@
+import * as firestore from "@firebase/firestore";
 import * as redux from "react-redux";
 import InputBox from "./InputBox";
 import React from "react";
+import {db} from "../../services/firebase";
 import {mount} from "enzyme";
 import store from "../../store/store";
 
 describe("Input Box tests", () => {
-   let wrapper;
-   let useDispatchSpy;
-   let mockDispatchFn;
-   let input;
+   let deleteDocSpy,
+      docSpy,
+      firestoreMock,
+      input,
+      key,
+      setDocSpy,
+      useSelectorSpy,
+      wrapper;
 
    const message = "Hello";
-   const storeAdd = "messages/add";
-   const storeRemove = "messages/remove";
+   const user = "Dave";
 
    beforeEach(() => {
-      useDispatchSpy = jest.spyOn(redux, "useDispatch");
-      mockDispatchFn = jest.fn();
-      useDispatchSpy.mockReturnValue(mockDispatchFn);
+
+      firestoreMock = {
+         setDoc: jest.fn(),
+         deleteDoc: jest.fn(),
+         collection: jest.fn(),
+         doc: jest.fn()
+      };
+
+      jest.mock("../../services/firebase");
+
+      useSelectorSpy = jest.spyOn(redux, "useSelector");
+      useSelectorSpy.mockReturnValue(user);
+
+      jest.useFakeTimers("modern");
+      jest.setSystemTime(new Date(2020, 3, 1));
+
+      key = new Date().getTime().toString();
+
+      setDocSpy = jest.spyOn(firestore, "setDoc").mockReturnValue(firestoreMock.setDoc);
+      docSpy = jest.spyOn(firestore, "doc").mockImplementation(() => firestoreMock.doc);
+      deleteDocSpy = jest.spyOn(firestore, "deleteDoc").mockImplementation(firestoreMock.deleteDoc);
 
       wrapper = mount(<redux.Provider store={store}>
          <InputBox />
       </redux.Provider>);
 
       input = wrapper.find("input");
+   });
+
+   afterEach(() => {
+      jest.clearAllMocks();
+      jest.runOnlyPendingTimers();
    });
 
    it("should clear the input when pressing 'Enter' or clicking 'Send' with the input field populated", () => {
@@ -48,38 +76,33 @@ describe("Input Box tests", () => {
       button.simulate("click");
       input.simulate("keydown", {key: "Enter"});
 
-      expect(mockDispatchFn).toHaveBeenCalledTimes(0);
+      expect(docSpy).toHaveBeenCalledTimes(0);
+      expect(setDocSpy).toHaveBeenCalledTimes(0);
    });
 
-   it("should correctly show the number of characters a user has remaining as they type a message", () => {
-      const charCount = wrapper.find("span");
-
-      expect(charCount.text()).toEqual("90");
-
-      input.simulate("change", {target: {value: message}});
-
-      expect(charCount.text()).toEqual("85");
-   });
-
-   it("should dispatch an action to add a message to the store when it has been submitted", () => {
+   it("should add a message to firestore with the correct data when it has been submitted", () => {
       input.simulate("change", {target: {value: message}});
       input.simulate("keydown", {key: "Enter"});
 
-      expect(mockDispatchFn.mock.calls[0][0].payload.msg).toEqual(message);
-
-      expect(mockDispatchFn.mock.calls[0][0].type).toEqual(storeAdd);
+      expect(docSpy).toHaveBeenCalledWith(db, "messages", key);
+      expect(setDocSpy).toHaveBeenCalledWith(firestoreMock.doc, {name: user,
+         message});
    });
 
-   it("should dispatch an action to remove the message from the store after 7 seconds", () => {
-      jest.useFakeTimers();
-
+   it("should remove the message from firestore after 7 seconds", () => {
       input.simulate("change", {target: {value: message}});
       input.simulate("keydown", {key: "Enter"});
 
-      jest.runAllTimers();
+      jest.runTimersToTime(6999);
 
-      expect(mockDispatchFn.mock.calls[1][0].type).toEqual(storeRemove);
+      expect(docSpy).toHaveBeenCalledTimes(1);
+      expect(docSpy).toHaveBeenCalledWith(db, "messages", key);
+      expect(deleteDocSpy).toHaveBeenCalledTimes(0);
 
-      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 7000);
+      jest.runTimersToTime(7000);
+
+      expect(docSpy).toHaveBeenCalledTimes(2);
+      expect(docSpy).toHaveBeenLastCalledWith(db, "messages", key);
+      expect(deleteDocSpy).toHaveBeenCalledWith(firestoreMock.doc);
    });
 });
