@@ -1,26 +1,78 @@
+import React, {useLayoutEffect, useEffect, useRef} from "react";
+import {collection, deleteDoc, doc, onSnapshot} from "@firebase/firestore";
+import {useDispatch, useSelector} from "react-redux";
 import Message from "../../components/Message";
-import React from "react";
+import {db} from "../../services/firebase";
+import {set} from "../../store/messagesSlice.js";
 import styles from "./Messages.module.scss";
-import {useSelector} from "react-redux";
 
 const Messages = () => {
    const messages = useSelector((state) => state.messages);
+   const user = useSelector((state) => state.user.name);
+   const lastBounds = useRef(null);
+   const messagesContRef = useRef(null);
+   const prevMessagesSize = useRef(messages.length);
+   const dispatch = useDispatch();
+
+   // Set up Firestore messages listener
+   useEffect(() => onSnapshot(collection(db, "messages"), snapshot => {
+      dispatch(set(snapshot.docs.map(document => {
+         // remove messages from db that are older than 5s
+         if (Number(document.id) + 5000 < new Date().getTime()) {
+            deleteDoc(doc(db, "messages", document.id));
+            return null;
+         }
+
+         return {
+            ...document.data(),
+            key: document.id
+         };
+
+      }).filter(val => val)));
+   }), []);
+
+   const getInvertedTransform = (startBounds, endBounds) => startBounds.height - endBounds.height;
+
+   // Messages container animation
+   useLayoutEffect(() => {
+      const bounds = messagesContRef.current.getBoundingClientRect();
+
+      if (lastBounds.current &&
+         messages.length > prevMessagesSize.current
+      ) {
+         const invertedTransform = getInvertedTransform(lastBounds.current, bounds);
+         lastBounds.current = bounds;
+
+         messagesContRef.current.animate(
+            [
+               {transform: `translateY(${-invertedTransform}px)`},
+               {transform: `translateY(0px)`}
+            ],
+            500
+         );
+      }
+
+      prevMessagesSize.current = messages.length;
+      lastBounds.current = bounds;
+   }, [messages]);
 
    return (
-      <section className={styles.background}>
-         <div className={styles.messages}>
-            {
-               messages.map(({msg, key}, index) => (
+      <div className={styles.messagesBg}>
+         <div
+            className={`messagesCont ${styles.messagesCont}`}
+            ref={messagesContRef}
+         >
+            { user ?
+               messages.map(({key, message, name}) => (
                   <Message
-                     index={index}
-                     msg={msg}
-                     totalNum={messages.length}
+                     altStyle={name === user ? "" : "leftPos"}
                      key={key}
+                     message={message}
                   />
-               ))
+               )) : ""
             }
          </div>
-      </section>
+      </div>
    );
 };
 

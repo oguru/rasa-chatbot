@@ -1,22 +1,26 @@
 @import "../../variables.scss";
 
-.background {
-    position: relative;
-    flex-grow: 1;
-    z-index: 1;
-
-    .messages {
-        align-items: flex-end;
+    .messagesBg {
         background: linear-gradient(to bottom, 
             rgba(255, 255, 255, 0.863) 0%,
             rgba(255, 255, 255, 0.932) 100%), 
             url("../../assets/ghosts-2.jpg") repeat;
         display: flex;
         flex-direction: column;
+        flex-grow: 1;
         height: 100%;
         justify-content: flex-end;
-        margin: 0 auto;
+        overflow: hidden;
         position: relative;
-        width: 100%;
+        z-index: 1;
+        
+        .messagesCont {
+            align-items: flex-end;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: transform 0.5s;
+            margin: 0 auto;
+            width: 100%;
+        }
     }
-}
