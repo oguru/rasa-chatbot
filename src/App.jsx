@@ -1,12 +1,16 @@
 import InputBox from "./components/InputBox/InputBox";
+import LoginBox from "./components/LoginBox/LoginBox";
 import Messages from "./containers/Messages";
 import React from "react";
 import styles from "./App.module.scss";
+import {useSelector} from "react-redux";
 
 const App = () => {
+   const user = useSelector((state) => state.user.name);
 
    return (
       <div className={styles.App}>
+         {!user && <LoginBox />}
          <div className={styles.messengerContainer}>
             <h1>Ghost Messenger</h1>
             <Messages />
