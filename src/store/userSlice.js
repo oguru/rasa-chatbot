@@ -5,7 +5,7 @@ const initialState = {
 };
 
 export const localUser = createSlice({
-   name: "messages",
+   name: "localUser",
    initialState,
    reducers: {
       setLocalUser: (state, action) => {
