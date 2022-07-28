@@ -5,57 +5,50 @@ import {act} from "react-dom/test-utils";
 
 describe("Message component tests", () => {
    let wrapper;
-   const msg = "Hello";
-   let totalNum = 1;
-   let index = 0;
+   const message = "Hello";
+   const index = 0;
 
    it("Should display the message from props", () => {
       wrapper = shallow(<Message
-         msg={msg}
-         totalNum={totalNum}
+         message={message}
          index={index}
       />);
 
-      const message = wrapper.find("p");
+      const msg = wrapper.find("p");
 
-      expect(message.text()).toEqual(msg);
+      expect(msg.text()).toEqual(message);
    });
 
-   it("Should have the 'disappear' css class applied after 5 seconds", async () => {
+   beforeEach(() => {
       jest.useFakeTimers();
 
       wrapper = mount(<Message
-         msg={msg}
-         totalNum={totalNum}
+         message={message}
          index={index}
       />);
+   });
 
-      let message = wrapper.find("p");
+   it("Should have the 'disappear' css class applied after 5 seconds", async () => {
 
-      expect(message.hasClass("disappear")).toBe(false);
+      let msg = wrapper.find("p");
+
+      expect(msg.hasClass("disappear")).toBe(false);
 
       await act(async () => {
          await jest.runAllTimers();
       });
       wrapper.update();
-      message = wrapper.find("p");
+      msg = wrapper.find("p");
 
       expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 5000);
-
-      expect(message.hasClass("disappear")).toBe(true);
+      expect(msg.hasClass("disappear")).toBe(true);
    });
 
-   it("Should start with translateY 50px inline style and change to 0px", () => {
-      jest.useFakeTimers();
-      wrapper = mount(<Message
-         msg={msg}
-         totalNum={totalNum}
-         index={index}
-      />);
+   it("Should start with translateY 35px inline style and change to 0px", () => {
 
-      const message = wrapper.find("p");
+      const msg = wrapper.find("p");
 
-      expect(message.props().style).toEqual({transform: "translateY(50px)"});
+      expect(msg.props().style).toEqual({transform: "translateY(35px)"});
 
       act(() => {
          jest.advanceTimersByTime(2);
@@ -65,49 +58,11 @@ describe("Message component tests", () => {
       expect(wrapper.find("p").props().style).toEqual({transform: "translateY(0px)"});
    });
 
-   it("Should change position when another message is added", () => {
-
-      jest.useFakeTimers();
-      wrapper = mount(<Message
-         msg={msg}
-         totalNum={totalNum}
-         index={index}
-      />);
-
-      const message = wrapper.find("p");
-
-      expect(message.props().style).toEqual({transform: "translateY(50px)"});
-
-      act(() => {
-         jest.advanceTimersByTime(2);
-      });
-
-      totalNum = 2;
-      index = 1;
-
-      wrapper.setProps({
-         totalNum,
-         index
-      });
-      wrapper.update();
-
-      const newMsgPos = -40 * (totalNum - index - 1);
-
-      expect(wrapper.find("p").props().style).toEqual({transform: `translateY(${newMsgPos}px)`});
-   });
-
    it("Should have translateY -100vh inline style after 5s", () => {
 
-      jest.useFakeTimers();
-      wrapper = mount(<Message
-         msg={msg}
-         totalNum={totalNum}
-         index={index}
-      />);
+      const msg = wrapper.find("p");
 
-      const message = wrapper.find("p");
-
-      expect(message.props().style).toEqual({transform: "translateY(50px)"});
+      expect(msg.props().style).toEqual({transform: "translateY(35px)"});
 
       act(() => {
          jest.advanceTimersByTime(5000);

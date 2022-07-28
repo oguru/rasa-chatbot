@@ -5,11 +5,16 @@
     border-radius: 4px;
     color: $secondary-text;
     margin: 10px;
+    max-width: 80%;
     padding: 5px 10px 8px;
-    position: absolute;
     transition: transform 0.5s;
     width: fit-content;
     z-index: 5;
+}
+
+.message.leftPos {
+    background-color: $tertiary-color;
+    margin-right: auto;
 }
 
 .message.disappear {
@@ -23,6 +28,7 @@ img {
     animation-delay: 0s, 5s;
     animation-duration: 5s, 2s;
     animation-name: ghostAppear, ghostCarry;
+    animation-fill-mode: forwards;
     bottom: 0;
     height: 120px;
     object-fit: contain;
@@ -30,6 +36,10 @@ img {
     right: 0;
     width: 120px;
     z-index: 11;
+}
+
+img.leftPos {
+    left: 0;
 }
 
 @keyframes ghostAppear {
@@ -49,15 +59,12 @@ img {
     }
     84% {
         transform: translateY(50px) rotate(15deg);
-
     }
     90% {
         transform: translateY(50px) rotate(-15deg);
-
     }
     98% {
         transform: translateY(50px) rotate(15deg);
-
     }
     100% {
         opacity: 0.4;
