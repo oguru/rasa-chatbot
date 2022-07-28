@@ -37,11 +37,15 @@ const LoginBox = () => {
                 ${styles.noBorder}`
             }>
                <input
+                  data-test="loginBoxInput"
                   onKeyDown={e => handleInput(e)}
                   onChange={e => handleInput(e)}
                />
-               <button onClick={(e) => handleSubmit(e)}>
-              Submit
+               <button
+                  data-test="loginBoxButton"
+                  onClick={(e) => handleSubmit(e)}
+               >
+                  Submit
                </button>
             </div>
          </form>
