@@ -1,0 +1,10 @@
+@import "./variables.scss";
+
+.inputCont {
+    background-color: $grey-bg;
+    border-top: 2px $grey-border solid;
+    border-bottom: 2px $grey-border solid;
+    display: flex;
+    padding: 10px;
+    z-index: 10;
+}

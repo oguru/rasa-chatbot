@@ -1,49 +1,24 @@
-import React, {useEffect, useState} from "react";
-import {add, remove} from "../../store/messagesSlice.js";
-import styles from "./InputBox.module.scss";
-import {useDebouncedCallback} from "use-debounce";
-import {useDispatch} from "react-redux";
+import React, {useState} from "react";
+import {deleteDoc, doc, setDoc} from "@firebase/firestore";
+import {db} from "../../services/firebase";
+import styles from "../../GlobalStyles.module.scss";
+import {useSelector} from "react-redux";
 
 const InputBox = () => {
-
    const [message, setMessage] = useState("");
-   const [windowWidth, setWindowWidth] = useState();
-   const [maxChars, setMaxChars] = useState(40);
-
-   const handleResize = useDebouncedCallback(
-      () => setWindowWidth(window.innerWidth),
-      100
-   );
-
-   useEffect(() => {
-      window.addEventListener("resize", handleResize);
-      handleResize();
-   }, []);
-
-   useEffect(() => {
-      if (windowWidth < 450) {
-         setMaxChars(30);
-      } else if (windowWidth < 768) {
-         setMaxChars(50);
-      } else if (windowWidth < 1024) {
-         setMaxChars(65);
-      } else {
-         setMaxChars(90);
-      }
-   }, [windowWidth]);
-
-   const dispatch = useDispatch();
+   const user = useSelector((state) => state.user.name);
 
    const sendMessage = () => {
-      if (message) {
+      if (message && user) {
          const key = new Date().getTime();
-         dispatch(add({
-            msg: message,
-            key
-         }));
+
+         setDoc(doc(db, "messages", key.toString()), {
+            name: user,
+            message
+         });
          setMessage("");
          setTimeout(() => {
-            dispatch(remove());
+            deleteDoc(doc(db, "messages", key.toString()));
          }, 7000);
       }
    };
@@ -59,18 +34,12 @@ const InputBox = () => {
    return (
       <div className={styles.inputCont}>
          <input
-            maxLength={maxChars}
             value={message}
             type="text"
-            onKeyDown={e => handleInput(e)}
-            onChange={e => handleInput(e)}
+            onKeyDown={(e) => handleInput(e)}
+            onChange={(e) => handleInput(e)}
          />
-         <span className={styles.chars}>
-            {message ? maxChars - message.length : maxChars}
-         </span>
-         <button onClick={() => sendMessage()}>
-            Send
-         </button>
+         <button onClick={() => sendMessage()}>Send</button>
       </div>
    );
 };

@@ -4,28 +4,21 @@ import ghost1 from "../../assets/ghost-1.png";
 import ghost2 from "../../assets/ghost-2.png";
 import styles from "./Message.module.scss";
 
-const Message = ({index, msg, totalNum}) => {
+const Message = ({altStyle, message}) => {
 
    Message.propTypes = {
-      index: PropTypes.number,
-      msg: PropTypes.string,
-      totalNum: PropTypes.number
+      altStyle: PropTypes.string,
+      message: PropTypes.string
    };
 
-   const [pos, setPos] = useState("50px");
-   const [init, setInit] = useState(true);
+   const [pos, setPos] = useState("35px");
    const [removing, setRemove] = useState(false);
 
    useEffect(() => {
-      if (init) {
-         setTimeout(() => {
-            setPos("0px");
-            setInit(false);
-         }, 2);
-      } else if (!removing) {
-         setPos(`${-40 * (totalNum - index - 1)}px`);
-      }
-   }, [totalNum]);
+      setTimeout(() => {
+         setPos("0px");
+      }, 2);
+   }, []);
 
    useEffect(() => {
       setTimeout(() => {
@@ -39,13 +32,15 @@ const Message = ({index, msg, totalNum}) => {
          <p style={{transform: `translateY(${pos})`}}
             className={`
                ${styles.message} 
+               ${styles[altStyle]}
                ${removing ? styles.disappear : ""}`
             }
          >
-            {msg}
+            {message}
          </p>
          <img
             alt="ghost"
+            className={styles[altStyle]}
             src={Math.random() > 0.5 ? ghost1 : ghost2}
          />
       </>

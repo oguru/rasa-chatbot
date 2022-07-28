@@ -1,18 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-export const slice = createSlice({
+export const messages = createSlice({
    name: "messages",
    initialState: [],
    reducers: {
-      add: (state, action) => {
-         state.push(action.payload);
-      },
-      remove: state => {
-         state.shift();
-      }
+      set: (state, action) => action.payload
    }
 });
 
-export const {add, remove} = slice.actions;
+export const {set} = messages.actions;
 
-export default slice.reducer;
+export default messages.reducer;
