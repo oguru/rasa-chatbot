@@ -37,7 +37,8 @@ const Messages = () => {
    useLayoutEffect(() => {
       const bounds = messagesContRef.current.getBoundingClientRect();
 
-      if (lastBounds.current &&
+      // If more than 1 message is present and a message has been added
+      if (lastBounds.current !== bounds &&
          messages.length > prevMessagesSize.current
       ) {
          const invertedTransform = getInvertedTransform(lastBounds.current, bounds);
