@@ -26,7 +26,12 @@ I greatly enjoyed this exercise and extended it to include a themed UI and anima
 
 Due to this, the timer was intentionally extended to 7 seconds for a better user experience.
 
-Several tests have been written to demonstrate my testing capabilities.
+**Further Extension**
+
+In an effort to hit the ground running upon securing the role, I asked whether there was anything I could learn or practice before starting.
+As I would be using Firestore extensively, I worked on integrating it to store messages to allow for realtime chatting using the app.
+
+The repository includes a series of tests to demonstrate my testing capabilities.
 
 ## Setup
 1 - Clone the repository.\
