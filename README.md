@@ -3,7 +3,7 @@
 ## Description
 To create a ReactJS web application: a simple "message queue" system utilising redux as the store for the messages.
 
-## Requirements
+## Requirements As Sent
 
 **The interface will be comprised of:**
 - A text box to enter string text
@@ -26,12 +26,21 @@ I greatly enjoyed this exercise and extended it to include a themed UI and anima
 
 Due to this, the timer was intentionally extended to 7 seconds for a better user experience.
 
-**Further Extension**
+## Further Extension Post Submission
 
 In an effort to hit the ground running upon securing the role, I asked whether there was anything I could learn or practice before starting.
 As I would be using Firestore extensively, I worked on integrating it to store messages to allow for realtime chatting using the app.
 
 The repository includes a series of tests to demonstrate my testing capabilities.
+
+## Future Considerations
+
+I may consider working on this in the future to:
+- Convert the project to Typescript
+- Use Cloud Functions to delete the messages after 7 seconds (not available for free)
+- Implement Auth and friend system to allow easy connections to other users
+- Implement security rules to restrict access to those who are authorised
+- Add user names to messages to show who sent them
 
 ## Setup
 1 - Clone the repository.\
