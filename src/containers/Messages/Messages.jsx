@@ -66,7 +66,7 @@ const Messages = () => {
             { user ?
                messages.map(({key, message, name}) => (
                   <Message
-                     altStyle={name === user ? "" : "leftPos"}
+                     altStyle={name !== user}
                      key={key}
                      message={message}
                   />
