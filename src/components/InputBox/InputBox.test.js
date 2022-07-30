@@ -36,7 +36,7 @@ describe("Input Box tests", () => {
       jest.useFakeTimers("modern");
       jest.setSystemTime(new Date(2020, 3, 1));
 
-      key = new Date().getTime().toString();
+      key = `${new Date().getTime().toString()}_${user}`;
 
       setDocSpy = jest.spyOn(firestore, "setDoc").mockReturnValue(firestoreMock.setDoc);
       docSpy = jest.spyOn(firestore, "doc").mockImplementation(() => firestoreMock.doc);
@@ -85,8 +85,7 @@ describe("Input Box tests", () => {
       input.simulate("keydown", {key: "Enter"});
 
       expect(docSpy).toHaveBeenCalledWith(db, "messages", key);
-      expect(setDocSpy).toHaveBeenCalledWith(firestoreMock.doc, {name: user,
-         message});
+      expect(setDocSpy).toHaveBeenCalledWith(firestoreMock.doc, {message});
    });
 
    it("should remove the message from firestore after 7 seconds", () => {

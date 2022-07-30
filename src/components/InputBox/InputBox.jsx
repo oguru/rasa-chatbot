@@ -10,15 +10,15 @@ const InputBox = () => {
 
    const sendMessage = () => {
       if (message && user) {
-         const key = new Date().getTime();
+         const key = `${new Date().getTime().toString()}_${user}`;
 
-         setDoc(doc(db, "messages", key.toString()), {
-            name: user,
+         setDoc(doc(db, "messages", key), {
+            // name: user,
             message
          });
          setMessage("");
          setTimeout(() => {
-            deleteDoc(doc(db, "messages", key.toString()));
+            deleteDoc(doc(db, "messages", key));
          }, 7000);
       }
    };

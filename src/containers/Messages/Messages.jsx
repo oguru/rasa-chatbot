@@ -17,15 +17,18 @@ const Messages = () => {
    // Set up Firestore messages listener
    useEffect(() => onSnapshot(collection(db, "messages"), snapshot => {
       dispatch(set(snapshot.docs.map(document => {
+         const [key, msgOwner] = document.id.split("_");
+
          // remove messages from db that are older than 5s
-         if (Number(document.id) + 5000 < new Date().getTime()) {
+         if (Number(key) + 5000 < new Date().getTime()) {
             deleteDoc(doc(db, "messages", document.id));
             return null;
          }
 
          return {
             ...document.data(),
-            key: document.id
+            name: msgOwner,
+            key
          };
 
       }).filter(val => val)));
