@@ -19,7 +19,7 @@ const InputBox = () => {
          setMessage("");
          setTimeout(() => {
             deleteDoc(doc(db, "messages", key));
-         }, 7000);
+         }, 8000);
       }
    };
 

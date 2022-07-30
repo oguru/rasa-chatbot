@@ -24,7 +24,7 @@ To create a ReactJS web application: a simple "message queue" system utilising r
 ## Submission Info
 I greatly enjoyed this exercise and extended it to include a themed UI and animations.
 
-Due to this, the timer was intentionally extended to 7 seconds for a better user experience.
+Due to this, the removal timer was intentionally extended for a better user experience.
 
 ## Further Extension Post Submission
 
@@ -35,12 +35,11 @@ The repository includes a series of tests to demonstrate my testing capabilities
 
 ## Future Considerations
 
-I may consider working on this in the future to:
+If I work on this project in the future, possible improvements include:
 - Convert the project to Typescript
-- Use Cloud Functions to delete the messages after 7 seconds (not available for free)
+- Use Cloud Functions to delete the messages after a set time (not available for free)
 - Implement Auth and friend system to allow easy connections to other users
 - Implement security rules to restrict access to those who are authorised
-- Add user names to messages to show who sent them
 
 ## Setup
 1 - Clone the repository.\

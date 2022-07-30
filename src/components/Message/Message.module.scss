@@ -1,23 +1,40 @@
 @import "../../variables.scss";
 
-.message {
+.messageCont {
     background-color: $secondary-color;
-    border-radius: 4px;
-    color: $secondary-text;
+    border-radius: 4px 4px 0 4px;
+    position: relative;
     margin: 10px;
     max-width: 80%;
     padding: 5px 10px 8px;
     transition: transform 0.5s;
     width: fit-content;
     z-index: 5;
+
+    p {
+        color: $secondary-text;
+    }
+
+    .username {
+        background: $tertiary-light;
+        border-radius: 0 0 4px 4px;
+        bottom: -16px;
+        font-size: 12px;
+        left: 0;
+        padding: 1px 5px;
+        position: absolute;
+        white-space: nowrap;
+        width: fit-content;
+    }
 }
 
-.message.leftPos {
+.messageCont.leftPos {
     background-color: $tertiary-color;
-    margin-right: auto;
+    border-radius: 4px 4px 4px 0;
+    margin: 10px auto 23px 10px;
 }
 
-.message.disappear {
+.messageCont.disappear {
     filter: blur(100px);
     opacity: 0;
     transform: scale(10.0);
@@ -38,9 +55,10 @@ img {
     z-index: 11;
 }
 
-img.leftPos {
+img.leftPos{
     left: 0;
 }
+
 
 @keyframes ghostAppear {
     0% {
