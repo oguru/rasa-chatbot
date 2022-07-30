@@ -4,11 +4,12 @@ import ghost1 from "../../assets/ghost-1.png";
 import ghost2 from "../../assets/ghost-2.png";
 import styles from "./Message.module.scss";
 
-const Message = ({altStyle, message}) => {
+const Message = ({altStyle, message, name}) => {
 
    Message.propTypes = {
       altStyle: PropTypes.bool,
-      message: PropTypes.string
+      message: PropTypes.string,
+      name: PropTypes.string
    };
 
    const [pos, setPos] = useState("35px");
@@ -29,15 +30,21 @@ const Message = ({altStyle, message}) => {
 
    return (
       <>
-         <p style={{transform: `translateY(${pos})`}}
+         <div
             className={`
-               ${styles.message} 
-               ${altStyle ? styles.leftPos : ""}
-               ${removing ? styles.disappear : ""}`
-            }
+               ${styles.messageCont} 
+               ${removing ? styles.disappear : ""} 
+               ${altStyle ? styles.leftPos : ""}`}
+            style={{transform: `translateY(${pos})`}}
          >
-            {message}
-         </p>
+            <p>{message}</p>
+            {altStyle && (
+               <p className={`
+                  ${styles.username}`
+               }>
+                  {name}
+               </p>)}
+         </div>
          <img
             alt="ghost"
             className={altStyle ? styles.leftPos : ""}

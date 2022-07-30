@@ -72,6 +72,7 @@ const Messages = () => {
                      altStyle={name !== user}
                      key={key}
                      message={message}
+                     name={name}
                   />
                )) : ""
             }
