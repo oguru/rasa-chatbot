@@ -7,7 +7,7 @@ import styles from "./Message.module.scss";
 const Message = ({altStyle, message}) => {
 
    Message.propTypes = {
-      altStyle: PropTypes.string,
+      altStyle: PropTypes.bool,
       message: PropTypes.string
    };
 
@@ -32,7 +32,7 @@ const Message = ({altStyle, message}) => {
          <p style={{transform: `translateY(${pos})`}}
             className={`
                ${styles.message} 
-               ${styles[altStyle]}
+               ${altStyle ? styles.leftPos : ""}
                ${removing ? styles.disappear : ""}`
             }
          >
@@ -40,7 +40,7 @@ const Message = ({altStyle, message}) => {
          </p>
          <img
             alt="ghost"
-            className={styles[altStyle]}
+            className={altStyle ? styles.leftPos : ""}
             src={Math.random() > 0.5 ? ghost1 : ghost2}
          />
       </>

@@ -6,7 +6,7 @@ import {db} from "../../services/firebase";
 import {mount} from "enzyme";
 import store from "../../store/store";
 
-describe("Input Box tests", () => {
+describe("Messages tests", () => {
    let wrapper,
       useDispatchSpy,
       mockDispatchFn,
@@ -57,10 +57,9 @@ describe("Input Box tests", () => {
    describe("New and Valid Message in Firestore", () => {
       beforeEach(() => {
          mockSnapshotMsg = {docs: [
-            {id: currentTime - 10,
+            {id: `${currentTime - 10}_${user}`,
                data: jest.fn(() => {
-                  return {name: user,
-                     message};
+                  return {message};
                })}
          ]};
 
@@ -89,10 +88,9 @@ describe("Input Box tests", () => {
    describe("Old and Invalid Message in Firestore", () => {
       beforeEach(() => {
          mockOldSnapshotMsg = {docs: [
-            {id: oldTime,
+            {id: `${oldTime - 10}_${user}`,
                data: jest.fn(() => {
-                  return {name: user,
-                     message};
+                  return {message};
                })}
          ]};
 
@@ -111,7 +109,7 @@ describe("Input Box tests", () => {
 
       it("should delete messages older than 5 seconds from firebase on load", () => {
          expect(deleteDocSpy).toHaveBeenCalled();
-         expect(docSpy).toHaveBeenCalledWith(db, "messages", oldTime);
+         expect(docSpy).toHaveBeenCalledWith(db, "messages", `${oldTime - 10}_${user}`);
       });
    });
 });
