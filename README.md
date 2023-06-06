@@ -49,4 +49,4 @@ If I work on this project in the future, possible improvements include:
 5 - Run ```yarn test``` or ```npm run test``` to run tests.
 
 ## Hosted Link
-#### [Link](https://ghost-messenger.peterdev.co.uk/) to live site.
+#### [Link](https://ghost-messenger.petedev.co.uk/) to live site.
