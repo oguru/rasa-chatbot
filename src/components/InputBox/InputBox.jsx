@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import {deleteDoc, doc, setDoc} from "@firebase/firestore";
 import {db} from "../../services/firebase";
@@ -13,10 +13,21 @@ const InputBox = () => {
    const user = useSelector((state) => state.user.name);
    const {
      transcript,
+     transcribing,
      listening,
      resetTranscript,
      browserSupportsSpeechRecognition
    } = useSpeechRecognition();
+
+   useEffect(() => {
+      if (!transcribing && transcript) {
+        setMessage(transcript);
+      }
+    }, [transcript, transcribing]);
+
+    useEffect(() => {
+        setIsListening(listening);
+    }, [listening]);
 
    const sendMessage = () => {
       if (message && user) {
@@ -41,13 +52,15 @@ const InputBox = () => {
       }
    };
 
-   const activateMicrophone = ( ) => {
-
-      console.log("Submit")
-   
-      //Add microphone access
-   
-      //create a WebSocket connection
+   const handleAudioInput = () => {
+      if (isListening) {
+         SpeechRecognition.stopListening();
+         resetTranscript();
+         // setIsListening(false);
+      } else {
+         // setIsListening(true);
+         SpeechRecognition.startListening();
+      }
    }
 
    return (
@@ -64,7 +77,7 @@ const InputBox = () => {
                   ${isListening && inputBoxStyles.micBtnListening} 
                   ${inputBoxStyles.micBtn}
                `} 
-               onClick={() => setIsListening((curr) => !curr)}
+               onClick={() => handleAudioInput()}
             >
                <img src={Microphone} alt="Microphone Icon" />
             </button>
