@@ -1,12 +1,33 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import {deleteDoc, doc, setDoc} from "@firebase/firestore";
 import {db} from "../../services/firebase";
-import styles from "../../GlobalStyles.module.scss";
 import {useSelector} from "react-redux";
+import inputBoxStyles from "./InputBox.module.scss";
+import Microphone from "../../assets/mic-icon-black.svg";
+import styles from "../../GlobalStyles.module.scss";
 
 const InputBox = () => {
    const [message, setMessage] = useState("");
+   const [isListening, setIsListening] = useState(false);
    const user = useSelector((state) => state.user.name);
+   const {
+     transcript,
+     transcribing,
+     listening,
+     resetTranscript,
+     browserSupportsSpeechRecognition
+   } = useSpeechRecognition();
+
+   useEffect(() => {
+      if (!transcribing && transcript) {
+        setMessage(transcript);
+      }
+    }, [transcript, transcribing]);
+
+    useEffect(() => {
+        setIsListening(listening);
+    }, [listening]);
 
    const sendMessage = () => {
       if (message && user) {
@@ -31,6 +52,17 @@ const InputBox = () => {
       }
    };
 
+   const handleAudioInput = () => {
+      if (isListening) {
+         SpeechRecognition.stopListening();
+         resetTranscript();
+         // setIsListening(false);
+      } else {
+         // setIsListening(true);
+         SpeechRecognition.startListening();
+      }
+   }
+
    return (
       <div className={styles.inputCont}>
          <input
@@ -39,6 +71,17 @@ const InputBox = () => {
             onKeyDown={(e) => handleInput(e)}
             onChange={(e) => handleInput(e)}
          />
+         {browserSupportsSpeechRecognition && (
+            <button 
+               className={`
+                  ${isListening && inputBoxStyles.micBtnListening} 
+                  ${inputBoxStyles.micBtn}
+               `} 
+               onClick={() => handleAudioInput()}
+            >
+               <img src={Microphone} alt="Microphone Icon" />
+            </button>
+         )}
          <button onClick={() => sendMessage()}>Send</button>
       </div>
    );

@@ -33,6 +33,14 @@ As I would be using Firestore extensively, I worked on integrating it to store m
 
 The repository includes a series of tests to demonstrate my testing capabilities.
 
+## 2023 Update
+
+Did some general cleaning up based on skills gained in my last two roles.
+
+To refamiliarise myself with TypeScript, I converted the project from JavaScript to TypeScript.
+
+I added Deepgram for voice to text transcribing.
+
 ## Future Considerations
 
 If I work on this project in the future, possible improvements include:
@@ -48,5 +56,8 @@ If I work on this project in the future, possible improvements include:
 4 - Open [http://localhost:3000](http://localhost:3000) to view it in the browser.\
 5 - Run ```yarn test``` or ```npm run test``` to run tests.
 
+To enable voice transcription capability:  
+* Obtain a [Deepgram](https://deepgram.com/) API key  
+* Add ```DEEPGRAM_API_KEY="YOURKEYHERE"``` in a .env file at root.
 ## Hosted Link
 #### [Link](https://ghost-messenger.petedev.co.uk/) to live site.
