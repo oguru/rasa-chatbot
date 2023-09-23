@@ -56,8 +56,5 @@ If I work on this project in the future, possible improvements include:
 4 - Open [http://localhost:3000](http://localhost:3000) to view it in the browser.\
 5 - Run ```yarn test``` or ```npm run test``` to run tests.
 
-To enable voice transcription capability:  
-* Obtain a [Deepgram](https://deepgram.com/) API key  
-* Add ```DEEPGRAM_API_KEY="YOURKEYHERE"``` in a .env file at root.
 ## Hosted Link
 #### [Link](https://ghost-messenger.petedev.co.uk/) to live site.

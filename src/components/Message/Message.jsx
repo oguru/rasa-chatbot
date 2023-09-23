@@ -5,27 +5,18 @@ import ghost2 from "../../assets/ghost-2.png";
 import styles from "./Message.module.scss";
 
 const Message = ({altStyle, message, name}) => {
-
-   Message.propTypes = {
-      altStyle: PropTypes.bool,
-      message: PropTypes.string,
-      name: PropTypes.string
-   };
-
    const [pos, setPos] = useState("35px");
    const [removing, setRemove] = useState(false);
 
    useEffect(() => {
-      setTimeout(() => {
-         setPos("0px");
-      }, 2);
-   }, []);
+      setPos("0px");
 
-   useEffect(() => {
-      setTimeout(() => {
+      const messageOutTimeout = setTimeout(() => {
          setRemove(true);
          setPos("-100vh");
       }, 5000);
+
+      return () => clearTimeout(messageOutTimeout)
    }, []);
 
    return (
@@ -52,6 +43,12 @@ const Message = ({altStyle, message, name}) => {
          />
       </>
    );
+};
+
+Message.propTypes = {
+   altStyle: PropTypes.bool,
+   message: PropTypes.string,
+   name: PropTypes.string
 };
 
 export default Message;
