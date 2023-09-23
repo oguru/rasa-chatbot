@@ -1,12 +1,22 @@
 import React, {useState} from "react";
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import {deleteDoc, doc, setDoc} from "@firebase/firestore";
 import {db} from "../../services/firebase";
-import styles from "../../GlobalStyles.module.scss";
 import {useSelector} from "react-redux";
+import inputBoxStyles from "./InputBox.module.scss";
+import Microphone from "../../assets/mic-icon-black.svg";
+import styles from "../../GlobalStyles.module.scss";
 
 const InputBox = () => {
    const [message, setMessage] = useState("");
+   const [isListening, setIsListening] = useState(false);
    const user = useSelector((state) => state.user.name);
+   const {
+     transcript,
+     listening,
+     resetTranscript,
+     browserSupportsSpeechRecognition
+   } = useSpeechRecognition();
 
    const sendMessage = () => {
       if (message && user) {
@@ -31,6 +41,15 @@ const InputBox = () => {
       }
    };
 
+   const activateMicrophone = ( ) => {
+
+      console.log("Submit")
+   
+      //Add microphone access
+   
+      //create a WebSocket connection
+   }
+
    return (
       <div className={styles.inputCont}>
          <input
@@ -39,6 +58,17 @@ const InputBox = () => {
             onKeyDown={(e) => handleInput(e)}
             onChange={(e) => handleInput(e)}
          />
+         {browserSupportsSpeechRecognition && (
+            <button 
+               className={`
+                  ${isListening && inputBoxStyles.micBtnListening} 
+                  ${inputBoxStyles.micBtn}
+               `} 
+               onClick={() => setIsListening((curr) => !curr)}
+            >
+               <img src={Microphone} alt="Microphone Icon" />
+            </button>
+         )}
          <button onClick={() => sendMessage()}>Send</button>
       </div>
    );

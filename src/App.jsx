@@ -4,6 +4,7 @@ import Messages from "./containers/Messages";
 import React from "react";
 import styles from "./App.module.scss";
 import {useSelector} from "react-redux";
+import "./GlobalStyles.module.scss";
 
 const App = () => {
    const user = useSelector((state) => state.user.name);
