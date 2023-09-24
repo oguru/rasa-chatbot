@@ -3,7 +3,7 @@ import {collection, deleteDoc, doc, onSnapshot} from "@firebase/firestore";
 import {useDispatch, useSelector} from "react-redux";
 import Message from "../../components/Message";
 import {db} from "../../services/firebase";
-import {set} from "../../store/messagesSlice.js";
+import {set} from "../../store/messagesSlice.ts";
 import styles from "./Messages.module.scss";
 
 const Messages = () => {

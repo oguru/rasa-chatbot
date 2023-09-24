@@ -1,6 +1,10 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-const initialState = {
+interface LocalUserState {
+   name: string;
+};
+
+const initialState: LocalUserState = {
    name: ""
 };
 
@@ -8,7 +12,7 @@ export const localUser = createSlice({
    name: "localUser",
    initialState,
    reducers: {
-      setLocalUser: (state, action) => {
+      setLocalUser: (state, action: PayloadAction<string>) => {
          state.name = action.payload;
       }
 
