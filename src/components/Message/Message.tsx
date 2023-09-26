@@ -4,10 +4,16 @@ import ghost1 from "../../assets/ghost-1.png";
 import ghost2 from "../../assets/ghost-2.png";
 import styles from "./Message.module.scss";
 
-const Message = ({altStyle, message, name}) => {
+type MessageProps = {
+   altStyle: boolean;
+   message: string;
+   name: string;
+};
+
+const Message = ({altStyle, message, name}: MessageProps) => {
    const [pos, setPos] = useState("35px");
    const [removing, setRemove] = useState(false);
-
+       
    useEffect(() => {
       setPos("0px");
 
@@ -43,12 +49,6 @@ const Message = ({altStyle, message, name}) => {
          />
       </>
    );
-};
-
-Message.propTypes = {
-   altStyle: PropTypes.bool,
-   message: PropTypes.string,
-   name: PropTypes.string
 };
 
 export default Message;

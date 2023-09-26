@@ -1,10 +1,11 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { MessageType } from "../type-definitions";
 
 export const messages = createSlice({
    name: "messages",
-   initialState: [] as string[],
+   initialState: [] as MessageType[],
    reducers: {
-      set: (state, action: PayloadAction<string[]>) => {
+      set: (_: any, action: PayloadAction<MessageType[]>) => {
          return action.payload;
       }
    }

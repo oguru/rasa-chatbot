@@ -7,6 +7,7 @@ import inputBoxStyles from "./InputBox.module.scss";
 import Microphone from "../../assets/mic-icon-black.svg";
 import styles from "../../GlobalStyles.module.scss";
 import { RootState } from "../../store/store";
+import { TextInputType } from "../../type-definitions";
 
 const InputBox = () => {
    const [message, setMessage] = useState("");
@@ -19,8 +20,6 @@ const InputBox = () => {
      browserSupportsSpeechRecognition
    } = useSpeechRecognition();
 
-   console.log("listening: ", listening)
-
    useEffect(() => {
       if (!listening && transcript) {
         setMessage(transcript);
@@ -28,10 +27,6 @@ const InputBox = () => {
 
       setIsListening(listening);
     }, [transcript, listening]);
-
-   //  useEffect(() => {
-   //      setIsListening(listening);
-   //  }, [listening]);
 
    const sendMessage = () => {
       if (message && user) {
@@ -48,11 +43,13 @@ const InputBox = () => {
       }
    };
 
-   const handleInput = (e: React.KeyboardEvent<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>) => {
-      if (
-         e instanceof KeyboardEvent && 
-         e.key === "Enter"
-      ) {
+   const handleInput = (e: TextInputType) => {
+      const isKeyboardEvent = (
+         e: TextInputType): e is React.KeyboardEvent<HTMLInputElement> => {
+         return 'key' in e;
+      }
+
+      if (isKeyboardEvent(e) && e.key === "Enter") {
          sendMessage();
       } else {
          setMessage(e.currentTarget.value);
@@ -71,6 +68,7 @@ const InputBox = () => {
    return (
       <div className={styles.inputCont}>
          <input
+            aria-label="Message input field"
             value={message}
             type="text"
             onKeyDown={(e) => handleInput(e)}

@@ -1,43 +1,66 @@
 import React, {useLayoutEffect, useEffect, useRef} from "react";
-import {collection, deleteDoc, doc, onSnapshot} from "@firebase/firestore";
+import {collection, deleteDoc, doc, onSnapshot, QuerySnapshot} from "@firebase/firestore";
 import {useDispatch, useSelector} from "react-redux";
 import Message from "../../components/Message";
 import {db} from "../../services/firebase";
-import {set} from "../../store/messagesSlice.ts";
+import {set} from "../../store/messagesSlice";
 import styles from "./Messages.module.scss";
+import { RootState } from "../../store/store";
+import { MessageType } from "../../type-definitions";
 
 const Messages = () => {
-   const messages = useSelector((state) => state.messages);
-   const user = useSelector((state) => state.user.name);
-   const lastBounds = useRef(null);
-   const messagesContRef = useRef(null);
-   const prevMessagesSize = useRef(messages.length);
+   const messages = useSelector((state: RootState) => state.messages);
+   const user = useSelector((state: RootState) => state.user.name);
+   const lastBounds = useRef<DOMRect | null>(null);
+   const messagesContRef = useRef<HTMLDivElement>(null);
+   const prevMessagesSize = useRef<number>(messages.length);
    const dispatch = useDispatch();
 
-   // Set up Firestore messages listener
-   useEffect(() => onSnapshot(collection(db, "messages"), snapshot => {
-      dispatch(set(snapshot.docs.map(document => {
-         const [key, msgOwner] = document.id.split("_");
+useEffect(() => {
+  const unsubscribe = onSnapshot(
+    collection(db, "messages"),
+    (snapshot: QuerySnapshot<any>) => {
+      const docs = snapshot.docs
+        .map((document) => {
+          const [key, msgOwner] = document.id.split("_");
 
-         // remove messages from db that are older than 5s
-         if (Number(key) + 5000 < new Date().getTime()) {
+          // Remove messages from db that are older than 5s
+          if (Number(key) + 5000 < new Date().getTime()) {
             deleteDoc(doc(db, "messages", document.id));
             return null;
-         }
+          }
 
-         return {
+          const messageData: MessageType = {
             ...document.data(),
             name: msgOwner,
-            key
-         };
+            key,
+          };
 
-      }).filter(val => val)));
-   }), []);
+          return messageData;
+        })
+        .filter((val) => val !== null); 
+        
+      dispatch(
+        set(docs as MessageType[])
+      );
+    }
+  );
 
-   const getInvertedTransform = (startBounds, endBounds) => startBounds.height - endBounds.height;
+  return () => {
+    unsubscribe();
+  };
+}, []);
+
+   const getInvertedTransform = (
+      startBounds: DOMRect, 
+      endBounds: DOMRect
+   ): number => startBounds.height - endBounds.height;
 
    // Messages container animation
    useLayoutEffect(() => {
+      if (messagesContRef.current === null || 
+         lastBounds.current === null ) return;
+
       const bounds = messagesContRef.current.getBoundingClientRect();
 
       // If more than 1 message is present and a message has been added
@@ -45,6 +68,7 @@ const Messages = () => {
          messages.length > prevMessagesSize.current
       ) {
          const invertedTransform = getInvertedTransform(lastBounds.current, bounds);
+         
          lastBounds.current = bounds;
 
          messagesContRef.current.animate(
