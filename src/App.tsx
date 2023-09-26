@@ -5,9 +5,10 @@ import React from "react";
 import styles from "./App.module.scss";
 import {useSelector} from "react-redux";
 import "./GlobalStyles.module.scss";
+import { RootState } from "./store/store";
 
 const App = () => {
-   const user = useSelector((state) => state.user.name);
+   const user = useSelector((state: RootState) => state.user.name);
 
    return (
       <div className={styles.App}>

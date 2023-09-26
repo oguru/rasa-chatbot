@@ -6,28 +6,27 @@ import {useSelector} from "react-redux";
 import inputBoxStyles from "./InputBox.module.scss";
 import Microphone from "../../assets/mic-icon-black.svg";
 import styles from "../../GlobalStyles.module.scss";
+import { RootState } from "../../store/store";
+import { TextInputType } from "../../type-definitions";
 
 const InputBox = () => {
    const [message, setMessage] = useState("");
    const [isListening, setIsListening] = useState(false);
-   const user = useSelector((state) => state.user.name);
+   const user = useSelector((state: RootState) => state.user.name);
    const {
      transcript,
-     transcribing,
      listening,
      resetTranscript,
      browserSupportsSpeechRecognition
    } = useSpeechRecognition();
 
    useEffect(() => {
-      if (!transcribing && transcript) {
+      if (!listening && transcript) {
         setMessage(transcript);
       }
-    }, [transcript, transcribing]);
 
-    useEffect(() => {
-        setIsListening(listening);
-    }, [listening]);
+      setIsListening(listening);
+    }, [transcript, listening]);
 
    const sendMessage = () => {
       if (message && user) {
@@ -44,11 +43,16 @@ const InputBox = () => {
       }
    };
 
-   const handleInput = (e) => {
-      if (e.key === "Enter") {
+   const handleInput = (e: TextInputType) => {
+      const isKeyboardEvent = (
+         e: TextInputType): e is React.KeyboardEvent<HTMLInputElement> => {
+         return 'key' in e;
+      }
+
+      if (isKeyboardEvent(e) && e.key === "Enter") {
          sendMessage();
       } else {
-         setMessage(e.target.value);
+         setMessage(e.currentTarget.value);
       }
    };
 
@@ -56,9 +60,7 @@ const InputBox = () => {
       if (isListening) {
          SpeechRecognition.stopListening();
          resetTranscript();
-         // setIsListening(false);
       } else {
-         // setIsListening(true);
          SpeechRecognition.startListening();
       }
    }
@@ -66,6 +68,7 @@ const InputBox = () => {
    return (
       <div className={styles.inputCont}>
          <input
+            aria-label="Message input field"
             value={message}
             type="text"
             onKeyDown={(e) => handleInput(e)}
