@@ -8,7 +8,7 @@ const initialState: LocalUserState = {
    name: ""
 };
 
-export const localUser = createSlice({
+const localUser = createSlice({
    name: "localUser",
    initialState,
    reducers: {

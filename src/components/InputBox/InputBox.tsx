@@ -1,18 +1,20 @@
 import React, {useEffect, useState} from "react";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import {deleteDoc, doc, setDoc} from "@firebase/firestore";
-import {db} from "../../services/firebase";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import inputBoxStyles from "./InputBox.module.scss";
 import Microphone from "../../assets/mic-icon-black.svg";
 import styles from "../../GlobalStyles.module.scss";
 import { RootState } from "../../store/store";
-import { TextInputType } from "../../type-definitions";
+import { MessageType, TextInputType } from "../../type-definitions";
+import { set } from "../../store/messagesSlice";
+import { setProcessing } from "../../store/botProcessingSlice";
 
 const InputBox = () => {
    const [message, setMessage] = useState("");
    const [isListening, setIsListening] = useState(false);
+   const messages = useSelector((state: RootState) => state.messages);
    const user = useSelector((state: RootState) => state.user.name);
+   const dispatch = useDispatch();
    const {
      transcript,
      listening,
@@ -29,18 +31,20 @@ const InputBox = () => {
     }, [transcript, listening]);
 
    const sendMessage = () => {
-      if (message && user) {
-         const key = `${new Date().getTime().toString()}_${user}`;
+      if (!message || !user) return;
 
-         setDoc(doc(db, "messages", key), {
-            // name: user,
-            message
-         });
-         setMessage("");
-         setTimeout(() => {
-            deleteDoc(doc(db, "messages", key));
-         }, 8000);
-      }
+      const key = `${new Date().getTime().toString()}_${user}`;
+      const docs = [...messages, {key, message, name: user} ]
+
+      dispatch(
+         set(docs as MessageType[])
+         );
+
+      dispatch(
+         setProcessing(true)
+         );
+
+      setMessage("");
    };
 
    const handleInput = (e: TextInputType) => {

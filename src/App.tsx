@@ -14,7 +14,7 @@ const App = () => {
       <div className={styles.App}>
          {!user && <LoginBox />}
          <div className={styles.messengerContainer}>
-            <h1>Ghost Messenger</h1>
+            <h1>Rasa Chatbot</h1>
             <Messages />
             <InputBox />
          </div>
