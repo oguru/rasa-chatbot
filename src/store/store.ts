@@ -1,11 +1,13 @@
 import {configureStore} from "@reduxjs/toolkit";
 import messagesReducer from "./messagesSlice";
 import userReducer from "./userSlice";
+import botProcessingReducer from "./botProcessingSlice";
 
 const store = configureStore({
    reducer: {
       messages: messagesReducer,
-      user: userReducer
+      user: userReducer,
+      botProcessing: botProcessingReducer
    }
 });
 

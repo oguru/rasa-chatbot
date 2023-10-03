@@ -34,13 +34,6 @@
     margin: 10px auto 23px 10px;
 }
 
-.messageCont.disappear {
-    filter: blur(100px);
-    opacity: 0;
-    transform: scale(10.0);
-    transition: all 2s;
-}
-
 img {
     animation-delay: 0s, 5s;
     animation-duration: 5s, 2s;

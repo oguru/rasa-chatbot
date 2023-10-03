@@ -1,8 +1,6 @@
 import React, {useLayoutEffect, useEffect, useRef} from "react";
-import {collection, deleteDoc, doc, onSnapshot, QuerySnapshot} from "@firebase/firestore";
 import {useDispatch, useSelector} from "react-redux";
 import Message from "../../components/Message";
-import {db} from "../../services/firebase";
 import {set} from "../../store/messagesSlice";
 import styles from "./Messages.module.scss";
 import { RootState } from "../../store/store";
@@ -11,45 +9,29 @@ import { MessageType } from "../../type-definitions";
 const Messages = () => {
    const messages = useSelector((state: RootState) => state.messages);
    const user = useSelector((state: RootState) => state.user.name);
-   const lastBounds = useRef<DOMRect | null>(null);
+   const lastBounds = useRef<null | DOMRect>(null);
    const messagesContRef = useRef<HTMLDivElement>(null);
    const prevMessagesSize = useRef<number>(messages.length);
    const dispatch = useDispatch();
+   const processing = useSelector((state: RootState) => state.botProcessing);
 
-useEffect(() => {
-  const unsubscribe = onSnapshot(
-    collection(db, "messages"),
-    (snapshot: QuerySnapshot<any>) => {
-      const docs = snapshot.docs
-        .map((document) => {
-          const [key, msgOwner] = document.id.split("_");
+   useEffect(() => {
+      if (!user) return;
 
-          // Remove messages from db that are older than 5s
-          if (Number(key) + 5000 < new Date().getTime()) {
-            deleteDoc(doc(db, "messages", document.id));
-            return null;
-          }
+      const key = `${new Date().getTime().toString()}_${user}`;
+      const docs = [
+         ...messages, 
+         {
+            key, 
+            message: `Hi ${user}! How can I help you?`, 
+            name: "Bot"
+         } 
+      ]
 
-          const messageData: MessageType = {
-            ...document.data(),
-            name: msgOwner,
-            key,
-          };
-
-          return messageData;
-        })
-        .filter((val) => val !== null); 
-        
       dispatch(
-        set(docs as MessageType[])
+         set(docs as MessageType[])
       );
-    }
-  );
-
-  return () => {
-    unsubscribe();
-  };
-}, []);
+   }, [user])  
 
    const getInvertedTransform = (
       startBounds: DOMRect, 
@@ -58,16 +40,14 @@ useEffect(() => {
 
    // Messages container animation
    useLayoutEffect(() => {
-      if (messagesContRef.current === null || 
-         lastBounds.current === null ) return;
+      if (messagesContRef.current === null ) return;
 
       const bounds = messagesContRef.current.getBoundingClientRect();
 
-      // If more than 1 message is present and a message has been added
       if (lastBounds.current !== bounds &&
          messages.length > prevMessagesSize.current
       ) {
-         const invertedTransform = getInvertedTransform(lastBounds.current, bounds);
+         const invertedTransform = getInvertedTransform(lastBounds.current as DOMRect, bounds);
          
          lastBounds.current = bounds;
 
@@ -100,6 +80,18 @@ useEffect(() => {
                   />
                )) : ""
             }
+            {processing && (
+               <Message
+                  altStyle
+                  name="Bot"
+               >
+                  <div className={styles.spinner}>
+                     <div className={styles.bounce1}></div>
+                     <div className={styles.bounce2}></div>
+                     <div className={styles.bounce3}></div>
+                  </div>
+               </Message>
+            )}
          </div>
       </div>
    );
