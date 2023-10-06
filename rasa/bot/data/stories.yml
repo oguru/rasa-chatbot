@@ -1,0 +1,32 @@
+version: "3.1"
+
+# Stories represents a single conversation or dialogue flow
+# Consists of a list of steps, each one defining interaction between the user and the bot
+# Steps can include user intents, bot actions and bot utterances
+# User intents represent the users intention or goals at each step, defined by the expected user input ie greeting, asking question etc
+
+stories:
+
+- story: happy path
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- story: express thanks
+  steps:
+  - intent: thank
+  - action: utter_thank
+
+- story: order food
+  steps:
+  - intent: order_food
+  - action: action_order_food
+  - intent: inform_food
+  - action: action_confirm_order
+
+- story: get pokemon
+  steps:
+  - intent: get_pokemon
+  - action: utter_choose_pokemon
+  - intent: inform_pokemon
+  - action: action_get_pokemon

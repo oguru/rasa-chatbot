@@ -1,0 +1,43 @@
+version: "3.1"
+
+# central place to define the capabilities and behaviour of the chatbot
+# Intents, Entities, Responses, Actions, Slots, Forms, Templates
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - thank
+  - order_pizza
+  - order_food
+  - inform_food
+  - get_pokemon
+  - inform_pokemon
+
+entities:
+  - food
+  - pokemon
+
+responses:
+  utter_greet:
+  - text: "Hey! How are you?"
+
+  utter_goodbye:
+  - text: "Bye"
+
+  utter_thank:
+  - text: "You are welcome."
+
+  utter_choose_pokemon:
+  - text: "Choose a pokemon"
+
+actions:
+  - action_extract_food_entity
+  - action_order_food
+  - action_confirm_order
+  - action_get_pokemon
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

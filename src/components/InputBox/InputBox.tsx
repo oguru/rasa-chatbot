@@ -8,6 +8,9 @@ import { RootState } from "../../store/store";
 import { MessageType, TextInputType } from "../../type-definitions";
 import { set } from "../../store/messagesSlice";
 import { setProcessing } from "../../store/botProcessingSlice";
+import getBotRes from "../../services/botApi";
+
+const makeKey = (user: string) => `${new Date().getTime().toString()}_${user}`
 
 const InputBox = () => {
    const [message, setMessage] = useState("");
@@ -30,20 +33,34 @@ const InputBox = () => {
       setIsListening(listening);
     }, [transcript, listening]);
 
-   const sendMessage = () => {
+   const sendMessage = async () => {
       if (!message || !user) return;
 
-      const key = `${new Date().getTime().toString()}_${user}`;
-      const docs = [...messages, {key, message, name: user} ]
+      let docs = [
+         ...messages, 
+         {
+            key: makeKey(user), 
+            message, 
+            name: user
+         } 
+      ]
 
-      dispatch(
-         set(docs as MessageType[])
-         );
+      dispatch(set(docs as MessageType[]));
+      dispatch(setProcessing(true));
 
-      dispatch(
-         setProcessing(true)
-         );
+      const botRes = await getBotRes({message, user});
 
+      docs = [
+         ...docs, 
+         {
+            key: makeKey("bot"), 
+            message: botRes[0].text, 
+            name: "Bot"
+         } 
+      ]
+
+      dispatch(set(docs as MessageType[]));
+      dispatch(setProcessing(false));
       setMessage("");
    };
 

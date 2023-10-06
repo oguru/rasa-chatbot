@@ -1,0 +1,110 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+
+- intent: thank
+  examples: |
+    - thank you
+    - thanks
+    - appreciate it
+    
+# - intent: order_pizza
+#   examples: |
+#     - order me a [pizza](food)
+#     - order me a [pizza](food) please
+#     - order me a [pizza](food) now
+#     - order me a [pizza](food) please
+#     - I want to order a [pizza](food)
+#     - Can you order me a [pizza](food)
+#     - I'd like to have a [pizza](food)
+#     - How about a [pizza](food)
+#     - Let's order a [pizza](food)
+#     - Get me a [pizza](food)
+
+- intent: order_food
+  examples: |
+    - order me some food
+    - Can I get some food
+    - I'd like to have some food
+    - How about some food
+    - Let's have some food
+    - Get me some food
+    - I want some food
+    - I'd like some food
+    
+- intent: inform_food
+  examples: |
+    - [burger](food)
+    - [pizza](food)
+    - [sushi](food)
+    - [salad](food)
+    - [pasta](food)
+    - [rice](food)
+    - [curry](food)
+
+- intent: get_pokemon
+  examples: |
+    - get me a pokemon
+    - get me a pokemon please
+    - get me a pokemon now
+    - get me a pokemon please
+    - I want to get a pokemon
+    - Can you get me a pokemon
+    - I'd like to have a pokemon
+    - How about a pokemon
+    - Let's get a pokemon
+
+- intent: inform_pokemon
+  examples: |
+    - [bulbasaur](pokemon)
+    - [charmander](pokemon)
+    - [squirtle](pokemon)
+    - [pikachu](pokemon)
+    - [venusaur](pokemon)

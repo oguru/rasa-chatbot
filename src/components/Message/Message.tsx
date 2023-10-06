@@ -14,9 +14,13 @@ const Message = ({altStyle, message, name, children}: MessageProps) => {
    const [pos, setPos] = useState("35px");
        
    useEffect(() => {
-      setTimeout(() => { 
+      const timeout = setTimeout(() => { 
          setPos("0px") 
       }, 60);
+
+      return () => {
+         clearTimeout(timeout);
+      }
    }, []);
 
    return (

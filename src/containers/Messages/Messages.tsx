@@ -70,7 +70,7 @@ const Messages = () => {
             className={`messagesCont ${styles.messagesCont}`}
             ref={messagesContRef}
          >
-            { user ?
+            {user ?
                messages.map(({key, message, name}) => (
                   <Message
                      altStyle={name !== user}
